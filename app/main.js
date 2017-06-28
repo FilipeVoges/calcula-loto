@@ -19,7 +19,7 @@ app.on('ready', function() {
 
   mainWindow.loadUrl('file://' + __dirname + '/src/index.html');
 
-  mainWindow.openDevTools();
+  //mainWindow.openDevTools();
 
   mainWindow.on('closed', function() {
 
