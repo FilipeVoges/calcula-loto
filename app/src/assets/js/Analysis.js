@@ -6,17 +6,34 @@ console.log("Analysis.js was loaded successfully");
  * @returns {Void}
  */
 function getDataResults(){
+    $.getJSON('https://www.lotodicas.com.br/api/mega-sena/', function(data){
+        var obj = getData(data.numero);
+        console.log(obj);
+    });
+
+}
+
+function getData(lastGame){
     var i = 1;
-    var isFinal = false;
-    while (!isFinal) {
-        var url = 'https://www.lotodicas.com.br/api/mega-sena/'+ i;
-        $.getJSON(url , function(data) {
-            console.log(data);
-            isFinal = true;
+    var results =[];
+    while (i < lastGame) {
+        var url = 'https://www.lotodicas.com.br/api/mega-sena/'+i;
+        $.getJSON(url , function(data){
+            results.push(criaNewJson(data))
         });
         i++;
     }
+    return results;
+}
 
+function criaNewJson(data){
+    return {
+        "game" : data.numero,
+        "data" : data.data,
+        "Number" : data.sorteio,
+        "acumulado" : data.acumulado,
+        "nextData" : data.proximo_data
+    };
 }
 
 /*
